@@ -47,6 +47,7 @@ func ExitHandler(c *gin.Context) {
 	fmt.Println("THE ATTENDANCE OBJECT IS", attendance)
 	if err != nil {
 		c.String(http.StatusServiceUnavailable, err.Error())
+		fmt.Println(err.Error())
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{
