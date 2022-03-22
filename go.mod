@@ -5,8 +5,8 @@ go 1.17
 require (
 	github.com/aws/aws-lambda-go v1.28.0
 	github.com/awslabs/aws-lambda-go-api-proxy v0.13.1
+	github.com/gin-contrib/cors v1.3.1
 	github.com/gin-gonic/gin v1.7.7
-	github.com/grokify/go-awslambda v0.1.5
 	github.com/leandroveronezi/go-recognizer v1.0.0
 	github.com/spf13/cast v1.4.1
 	github.com/spf13/viper v1.10.1
@@ -48,7 +48,6 @@ require (
 	golang.org/x/sys v0.0.0-20220227234510-4e6760a101f9 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/protobuf v1.27.1 // indirect
-	gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 // indirect
 	gopkg.in/ini.v1 v1.66.2 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )

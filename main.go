@@ -6,6 +6,7 @@ import (
 
 	"log"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -13,6 +14,11 @@ func init() {
 	configuration.Init()
 	log.Printf("Gin cold start")
 	handlers.Router = gin.Default()
+	handlers.Router.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"*"},
+		AllowMethods:     []string{"GET"},
+		AllowCredentials: true,
+	}))
 
 	// Attendance Endpoints
 	handlers.Router.POST("/entry", handlers.EntryHandler)
