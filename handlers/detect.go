@@ -16,6 +16,7 @@ func EntryHandler(c *gin.Context) {
 	company_id := c.PostForm("company_id")
 	if err != nil {
 		c.String(http.StatusBadRequest, err.Error())
+		return
 	}
 	c.SaveUploadedFile(image, "/tmp/image.jpg")
 	attendance, err := controllers.EntryDetect("/tmp/image.jpg", cast.ToFloat64(lat), cast.ToFloat64(long), cast.ToUint(company_id))
@@ -39,6 +40,7 @@ func ExitHandler(c *gin.Context) {
 	company_id := c.PostForm("company_id")
 	if err != nil {
 		c.String(http.StatusBadRequest, err.Error())
+		return
 	}
 	c.SaveUploadedFile(image, "/tmp/image.jpg")
 	attendance, err := controllers.ExitDetect("/tmp/image.jpg", cast.ToFloat64(lat), cast.ToFloat64(long), cast.ToUint(company_id))
