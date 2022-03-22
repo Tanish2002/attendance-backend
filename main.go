@@ -16,7 +16,7 @@ func init() {
 	handlers.Router = gin.Default()
 	handlers.Router.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"*"},
-		AllowMethods:     []string{"GET"},
+		AllowMethods:     []string{"GET", "POST"},
 		AllowCredentials: true,
 	}))
 
@@ -31,6 +31,10 @@ func init() {
 	// Company Endpoints
 	handlers.Router.POST("/companyregister", handlers.CompanyRegister_Handler)
 	handlers.Router.POST("/companylogin", handlers.CompanyLogin_Handler)
+
+	// Admin Endpoints
+	handlers.Router.POST("/adminregister", handlers.AdminRegister_Handler)
+	handlers.Router.POST("/adminlogin", handlers.AdminLogin_Handler)
 
 }
 
