@@ -21,7 +21,7 @@ func AddCompanyDetails(company_details *Company_Details) (*Company_Details, erro
 	return company_details, nil
 }
 
-func GetCompanyDetailByID(id string) Company_Details {
+func GetCompanyDetailByID(id uint) Company_Details {
 	var company Company_Details
 	DB.Take(&company, id)
 	return company

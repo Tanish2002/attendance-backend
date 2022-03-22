@@ -7,7 +7,13 @@ import (
 	"time"
 )
 
-func EntryDetect(imagePath string) (*models.Attendance_Taken, error) {
+func EntryDetect(imagePath string, lat float64, long float64, company_id uint) (*models.Attendance_Taken, error) {
+	company := models.GetCompanyDetailByID(company_id)
+
+	if models.Measure(lat, long, company.Lat, company.Long) > float64(100) {
+		return nil, fmt.Errorf("not in company")
+	}
+
 	id, err := services.DetectFace(imagePath)
 	if err != nil {
 		return nil, err
@@ -29,7 +35,12 @@ func EntryDetect(imagePath string) (*models.Attendance_Taken, error) {
 	return attendance, nil
 }
 
-func ExitDetect(imagePath string) (*models.Attendance_Taken, error) {
+func ExitDetect(imagePath string, lat float64, long float64, company_id uint) (*models.Attendance_Taken, error) {
+	company := models.GetCompanyDetailByID(company_id)
+
+	if models.Measure(lat, long, company.Lat, company.Long) > float64(100) {
+		return nil, fmt.Errorf("not in company")
+	}
 	id, err := services.DetectFace(imagePath)
 	if err != nil {
 		return nil, err

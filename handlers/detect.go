@@ -6,15 +6,19 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/spf13/cast"
 )
 
 func EntryHandler(c *gin.Context) {
+	lat := c.PostForm("lat")
+	long := c.PostForm("lon")
 	image, err := c.FormFile("image")
+	company_id := c.PostForm("company_id")
 	if err != nil {
 		c.String(http.StatusBadRequest, err.Error())
 	}
 	c.SaveUploadedFile(image, "/tmp/image.jpg")
-	attendance, err := controllers.EntryDetect("/tmp/image.jpg")
+	attendance, err := controllers.EntryDetect("/tmp/image.jpg", cast.ToFloat64(lat), cast.ToFloat64(long), cast.ToUint(company_id))
 	if err != nil {
 		c.String(http.StatusServiceUnavailable, err.Error())
 		return
@@ -29,12 +33,15 @@ func EntryHandler(c *gin.Context) {
 	// }
 }
 func ExitHandler(c *gin.Context) {
+	lat := c.PostForm("lat")
+	long := c.PostForm("lon")
 	image, err := c.FormFile("image")
+	company_id := c.PostForm("company_id")
 	if err != nil {
 		c.String(http.StatusBadRequest, err.Error())
 	}
 	c.SaveUploadedFile(image, "/tmp/image.jpg")
-	attendance, err := controllers.ExitDetect("/tmp/image.jpg")
+	attendance, err := controllers.ExitDetect("/tmp/image.jpg", cast.ToFloat64(lat), cast.ToFloat64(long), cast.ToUint(company_id))
 	fmt.Println("THE ATTENDANCE OBJECT IS", attendance)
 	if err != nil {
 		c.String(http.StatusServiceUnavailable, err.Error())
