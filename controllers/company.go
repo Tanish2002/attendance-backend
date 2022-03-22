@@ -18,10 +18,16 @@ func RegisterComapny(name string, pass string, lat float64, long float64, entry_
 	})
 	return company, err
 }
-func LoginCompany(name string, pass string) error {
-	res := models.GetCompanyDetailsByNamePass(name, pass)
-	if res == 0 {
-		return fmt.Errorf("company not registered")
+func LoginCompany(name string, pass string) (*models.Company_Details, error) {
+	company_details := &models.Company_Details{
+		Name:     name,
+		Password: pass,
 	}
-	return nil
+	company, res := models.GetCompanyDetailsByNamePass(company_details)
+	fmt.Println(company)
+	fmt.Println(res)
+	if res == 0 {
+		return nil, fmt.Errorf("company not registered")
+	}
+	return company, nil
 }

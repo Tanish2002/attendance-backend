@@ -27,10 +27,7 @@ func GetCompanyDetailByID(id uint) Company_Details {
 	return company
 }
 
-func GetCompanyDetailsByNamePass(name string, pass string) int64 {
-	res := DB.Where(&Company_Details{
-		Name:     name,
-		Password: pass,
-	}).Take(&Company_Details{})
-	return res.RowsAffected
+func GetCompanyDetailsByNamePass(company_details *Company_Details) (*Company_Details, int64) {
+	res := DB.Where(company_details).Take(company_details)
+	return company_details, res.RowsAffected
 }

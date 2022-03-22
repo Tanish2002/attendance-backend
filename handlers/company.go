@@ -33,10 +33,11 @@ func CompanyRegister_Handler(c *gin.Context) {
 func CompanyLogin_Handler(c *gin.Context) {
 	name := c.PostForm("name")
 	pass := c.PostForm("pass")
-	if err := controllers.LoginCompany(name, pass); err != nil {
+	company, err := controllers.LoginCompany(name, pass)
+	if err != nil {
 		c.String(http.StatusInternalServerError, err.Error())
 		return
 	}
-	c.String(http.StatusOK, "Logged IN")
+	c.JSON(http.StatusOK, company)
 
 }
