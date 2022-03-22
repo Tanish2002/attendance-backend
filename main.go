@@ -1,15 +1,41 @@
 package main
 
 import (
+	"attendance-backend/configuration"
+	"attendance-backend/handlers"
+
+	"log"
+
 	"github.com/gin-gonic/gin"
 )
-var Router * gin.Engine
+
+func init() {
+	configuration.Init()
+	log.Printf("Gin cold start")
+	handlers.Router = gin.Default()
+
+	// Attendance Endpoints
+	handlers.Router.POST("/entry", handlers.EntryHandler)
+	handlers.Router.POST("/exit", handlers.ExitHandler)
+	handlers.Router.POST("/registerface", handlers.RegisterFaceHandler)
+
+	// Employee List
+	handlers.Router.POST("/employees", handlers.EmployeesListHandler)
+
+	// Company Endpoints
+	handlers.Router.POST("/companyregister", handlers.CompanyRegister_Handler)
+	handlers.Router.POST("/companylogin", handlers.CompanyLogin_Handler)
+
+}
+
 func main() {
-	r := gin.Default()
-	r.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "Hello world!",
-		})
-	})
-	r.Run()
+	// services.AddFile(&services.Rec, "fotos/1.jpg", "lol")
+	// services.Rec.SaveDataset("dataset.json")
+
+	if configuration.Runmode == "dev" {
+		handlers.Router.Run(":8080")
+	}
+	handlers.Router.Run()
+	//lambda.Start(handlers.LambdaHandler)
+	//algnhsa.ListenAndServe(router, nil)
 }
