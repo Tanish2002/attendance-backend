@@ -3,6 +3,7 @@ package main
 import (
 	"attendance-backend/configuration"
 	"attendance-backend/handlers"
+	"os"
 
 	"log"
 
@@ -43,5 +44,6 @@ func main() {
 	if configuration.Runmode == "dev" {
 		app.Listen(":8080")
 	}
-	app.Listen(":8080")
+	PORT := os.Getenv("PORT")
+	app.Listen(PORT)
 }
