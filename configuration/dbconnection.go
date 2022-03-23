@@ -44,7 +44,6 @@ func registerDatabase() {
 	if err != nil {
 		fmt.Println("Failed to connect to database: ", err)
 	}
-	fmt.Println(models.DB)
 	// Create Tables if they aren't already created
 	models.DB.AutoMigrate(&models.Attendance_Taken{}, &models.Admin_Details{}, &models.Employee_Details{}, &models.Company_Details{}, &models.Dataset{})
 }

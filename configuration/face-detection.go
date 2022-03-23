@@ -14,9 +14,8 @@ func face_detection() {
 		return
 	}
 
-	services.Rec.Tolerance = 0.3
+	services.Rec.Tolerance = 1
 	services.Rec.UseGray = true
 	services.Rec.UseCNN = true
 	services.LoadDataset(&services.Rec)
-	fmt.Println(services.Rec)
 }

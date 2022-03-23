@@ -9,7 +9,7 @@ import (
 	"gorm.io/datatypes"
 )
 
-var Rec *recognizer.Recognizer
+var Rec recognizer.Recognizer
 
 func AddFile(rec *recognizer.Recognizer, Path, Id string) error {
 	err := rec.AddImageToDataset(Path, Id)
@@ -19,11 +19,11 @@ func AddFile(rec *recognizer.Recognizer, Path, Id string) error {
 	return nil
 }
 func RegisterFace(imagePath string, name string) error {
-	if err := AddFile(Rec, imagePath, name); err != nil {
+	if err := AddFile(&Rec, imagePath, name); err != nil {
 		return err
 	}
 	Rec.SetSamples()
-	if err := SaveDataset(Rec); err != nil {
+	if err := SaveDataset(&Rec); err != nil {
 		return err
 	}
 	return nil
@@ -31,10 +31,10 @@ func RegisterFace(imagePath string, name string) error {
 func DetectFace(imagePath string) (string, error) {
 	Rec.SetSamples()
 	face, err := Rec.ClassifyMultiples(imagePath)
-	fmt.Println("Face is: ", face)
-	if err != nil {
-		return "", fmt.Errorf("no face detected")
+	if len(face) == 0 {
+		return "", fmt.Errorf("no face detected: %s", err)
 	}
+
 	fmt.Println(face[0].Data.Id)
 	return face[0].Data.Id, nil
 }
