@@ -8,6 +8,7 @@ import (
 	"github.com/spf13/viper"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 type MysqlConfig struct {
@@ -33,7 +34,7 @@ func registerDatabase() {
 	var err error
 	models.DB, err = gorm.Open(mysql.Open(mysqlConf), &gorm.Config{
 		// Silent ORM Logs
-		//Logger: logger.Default.LogMode(logger.Silent),
+		Logger: logger.Default.LogMode(logger.Silent),
 	})
 	if err != nil {
 		fmt.Println("Failed to connect to database")
