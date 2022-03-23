@@ -14,6 +14,9 @@ var Router *gin.Engine
 
 func init() {
 	configuration.Init()
+}
+
+func main() {
 	log.Printf("Gin cold start")
 	Router = gin.Default()
 	Router.Use(cors.Default())
@@ -34,16 +37,8 @@ func init() {
 	Router.POST("/adminregister", handlers.AdminRegister_Handler)
 	Router.POST("/adminlogin", handlers.AdminLogin_Handler)
 
-}
-
-func main() {
-	// services.AddFile(&services.Rec, "fotos/1.jpg", "lol")
-	// services.Rec.SaveDataset("dataset.json")
-
 	if configuration.Runmode == "dev" {
 		Router.Run(":8080")
 	}
 	Router.Run()
-	//lambda.Start(handlers.LambdaHandler)
-	//algnhsa.ListenAndServe(router, nil)
 }
