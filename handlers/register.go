@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"attendance-backend/controllers"
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -19,7 +18,6 @@ func RegisterFaceHandler(c *gin.Context) {
 		c.String(http.StatusBadRequest, err.Error())
 		return
 	}
-	fmt.Println("AAAAAAAAAAAAAAAAAAAAAAAaa")
 	c.SaveUploadedFile(image, "/tmp/image.jpg")
 	if err := controllers.RegisterFace(name, gender, company_id, "/tmp/image.jpg"); err != nil {
 		c.String(http.StatusServiceUnavailable, err.Error())
