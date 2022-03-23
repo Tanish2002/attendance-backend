@@ -4,6 +4,8 @@ import (
 	"attendance-backend/models"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
+	"os"
 
 	"github.com/leandroveronezi/go-recognizer"
 	"gorm.io/datatypes"
@@ -35,6 +37,12 @@ func DetectFace(imagePath string) (string, error) {
 		return "", fmt.Errorf("no face detected")
 	}
 	fmt.Println(face[0].Data.Id)
+	// Rec.DrawFaces("faces.jpg", face)
+	img, err := Rec.DrawFaces(imagePath, face)
+	if err != nil {
+		return "", err
+	}
+	Rec.SaveImage("faces.jpg", img)
 	return face[0].Data.Id, nil
 }
 func SaveDataset(rec *recognizer.Recognizer) error {
@@ -57,15 +65,14 @@ func SaveDataset(rec *recognizer.Recognizer) error {
 }
 func LoadDataset(rec *recognizer.Recognizer) error {
 	data := models.GetDataset()
-	// ioutil.WriteFile("/tmp/dataset.json", data, 0777)
-	// file, err := os.OpenFile("/tmp/dataset.json", os.O_RDONLY, 0777)
-	// if err != nil {
-	// 	return err
-	// }
+	ioutil.WriteFile("/tmp/dataset.json", data, 0777)
+	file, err := os.OpenFile("/tmp/dataset.json", os.O_RDONLY, 0777)
+	if err != nil {
+		return err
+	}
 
 	Dataset := make([]recognizer.Data, 0)
-	err := json.Unmarshal(data, &Dataset)
-	// err = json.NewDecoder(file).Decode(&Dataset)
+	err = json.NewDecoder(file).Decode(&Dataset)
 	if err != nil {
 		return err
 	}

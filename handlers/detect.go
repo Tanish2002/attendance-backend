@@ -16,6 +16,7 @@ func EntryHandler(c *gin.Context) {
 	company_id := c.PostForm("company_id")
 	if err != nil {
 		c.String(http.StatusBadRequest, err.Error())
+		fmt.Println(err.Error())
 		return
 	}
 	c.SaveUploadedFile(image, "/tmp/image.jpg")
@@ -28,6 +29,10 @@ func EntryHandler(c *gin.Context) {
 		"status":  "entry marked",
 		"message": attendance,
 	})
+	// if err := controllers.EntryDetect("/tmp/image.jpg"); err != nil {
+	// 	c.String(http.StatusServiceUnavailable, err.Error())
+	// 	return
+	// }
 }
 func ExitHandler(c *gin.Context) {
 	lat := c.PostForm("lat")
@@ -36,6 +41,7 @@ func ExitHandler(c *gin.Context) {
 	company_id := c.PostForm("company_id")
 	if err != nil {
 		c.String(http.StatusBadRequest, err.Error())
+		fmt.Println(err.Error())
 		return
 	}
 	c.SaveUploadedFile(image, "/tmp/image.jpg")
@@ -43,11 +49,14 @@ func ExitHandler(c *gin.Context) {
 	fmt.Println("THE ATTENDANCE OBJECT IS", attendance)
 	if err != nil {
 		c.String(http.StatusServiceUnavailable, err.Error())
-		fmt.Println(err.Error())
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{
 		"status":  "exit marked",
 		"message": attendance,
 	})
+	// if err := controllers.EntryDetect("/tmp/image.jpg"); err != nil {
+	// 	c.String(http.StatusServiceUnavailable, err.Error())
+	// 	return
+	// }
 }
