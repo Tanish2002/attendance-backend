@@ -217,8 +217,9 @@ func (_this *Recognizer) RecognizeMultiples(Path string) ([]goFace.Face, error) 
 Classify returns all faces identified in the image. Empty list is returned if no match.
 */
 func (_this *Recognizer) Classify(Path string) ([]Face, error) {
-	fmt.Println("REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE")
+
 	face, err := _this.RecognizeSingle(Path)
+
 	if err != nil {
 		return nil, err
 	}
