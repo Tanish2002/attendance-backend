@@ -15,6 +15,6 @@ RUN go env -w GOPROXY=direct
 # RUN go mod download
 
 # Build the binary for linux with x86_64 Arch
-# RUN GOOS=linux GOARCH=amd64 go build -mod vendor -o /bin/attendance-backend
+RUN GOOS=linux GOARCH=amd64 go build -mod vendor -o /bin/attendance-backend
 
-ENTRYPOINT [ "go run /app/main.go"]
+ENTRYPOINT [ "/bin/attendance-backend"]
