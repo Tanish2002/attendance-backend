@@ -16,13 +16,13 @@ func EntryHandler(c *gin.Context) {
 	company_id := c.PostForm("company_id")
 	if err != nil {
 		c.String(http.StatusBadRequest, err.Error())
-		fmt.Println(err.Error())
 		return
 	}
 	c.SaveUploadedFile(image, "/tmp/image.jpg")
 	attendance, err := controllers.EntryDetect("/tmp/image.jpg", cast.ToFloat64(lat), cast.ToFloat64(long), cast.ToUint(company_id))
 	if err != nil {
 		c.String(http.StatusServiceUnavailable, err.Error())
+		fmt.Println(err.Error())
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{
@@ -37,7 +37,6 @@ func ExitHandler(c *gin.Context) {
 	company_id := c.PostForm("company_id")
 	if err != nil {
 		c.String(http.StatusBadRequest, err.Error())
-		fmt.Println(err.Error())
 		return
 	}
 	c.SaveUploadedFile(image, "/tmp/image.jpg")
@@ -45,6 +44,7 @@ func ExitHandler(c *gin.Context) {
 	fmt.Println("THE ATTENDANCE OBJECT IS", attendance)
 	if err != nil {
 		c.String(http.StatusServiceUnavailable, err.Error())
+		fmt.Println(err.Error())
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{
