@@ -2,13 +2,17 @@ package handlers
 
 import (
 	"attendance-backend/controllers"
+	"fmt"
 	"net/http"
+	"net/http/httputil"
 
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cast"
 )
 
 func RegisterFaceHandler(c *gin.Context) {
+	c.Header("Content-Type", "multipart/form-data")
+	fmt.Println(httputil.DumpRequest(c.Request, true))
 	name := c.PostForm("name")
 	gender := c.PostForm("gender")
 	company_id_query := c.PostForm("company_id")
