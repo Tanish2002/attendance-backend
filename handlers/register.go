@@ -2,28 +2,38 @@ package handlers
 
 import (
 	"attendance-backend/controllers"
-	"net/http"
 
-	"github.com/gin-gonic/gin"
+	"github.com/gofiber/fiber/v2"
 	"github.com/spf13/cast"
 )
 
-func RegisterFaceHandler(c *gin.Context) {
+func RegisterFaceHandler(c *fiber.Ctx) error {
 	// req, _ := httputil.DumpRequest(c.Request, true)
 	// fmt.Println(string(req))
-	name := c.PostForm("name")
-	gender := c.PostForm("gender")
-	company_id_query := c.PostForm("company_id")
+	name := c.FormValue("name")
+	gender := c.FormValue("gender")
+	company_id_query := c.FormValue("company_id")
 	company_id := cast.ToUint(company_id_query)
+
 	image, err := c.FormFile("image")
+
+	// image := c.PostForm("image")
+	// coI := strings.Index(string(image), ",")
+	// rawImage := string(image)[coI+1:]
+	// unbased, _ := base64.StdEncoding.DecodeString(string(rawImage))
+	// jpgI, err := jpeg.Decode(bytes.NewReader(unbased))
+	// if err != nil {
+	// 	c.String(http.StatusBadRequest, err.Error())
+	// 	return
+	// }
+	//err = services.Rec.SaveImage("/tmp/image.jpg", jpgI)
+
+	c.SaveFile(image, "/tmp/image.jpg")
 	if err != nil {
-		c.String(http.StatusBadRequest, err.Error())
-		return
+		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
-	c.SaveUploadedFile(image, "/tmp/image.jpg")
 	if err := controllers.RegisterFace(name, gender, company_id, "/tmp/image.jpg"); err != nil {
-		c.String(http.StatusServiceUnavailable, err.Error())
-		return
+		return fiber.NewError(fiber.StatusServiceUnavailable, err.Error())
 	}
-	c.String(http.StatusOK, "Face Registered!")
+	return c.SendString("Face Registered!")
 }

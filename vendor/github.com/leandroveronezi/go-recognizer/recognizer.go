@@ -5,10 +5,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	goFace "github.com/Kagami/go-face"
 	"image"
 	"os"
-
-	goFace "github.com/Kagami/go-face"
 )
 
 // Data descriptor of the human face.

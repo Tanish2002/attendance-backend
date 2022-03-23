@@ -6,39 +6,42 @@ import (
 
 	"log"
 
-	"github.com/gin-contrib/cors"
-	"github.com/gin-gonic/gin"
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/gofiber/fiber/v2/middleware/logger"
 )
 
-var Router *gin.Engine
+//var Router *gin.Engine
 
 func init() {
 	configuration.Init()
 }
 
 func main() {
-	log.Printf("Gin cold start")
-	Router = gin.Default()
-	Router.Use(cors.Default())
+	log.Printf("Fiber start")
+	app := fiber.New()
+	app.Use(cors.New())
+	app.Use(logger.New())
+	// Router.Use(cors.Default())
 
 	// Attendance Endpoints
-	Router.POST("/entry", handlers.EntryHandler)
-	Router.POST("/exit", handlers.ExitHandler)
-	Router.POST("/registerface", handlers.RegisterFaceHandler)
+	app.Post("/entry", handlers.EntryHandler)
+	app.Post("/exit", handlers.ExitHandler)
+	app.Post("/registerface", handlers.RegisterFaceHandler)
 
 	// Employee List
-	Router.POST("/employees", handlers.EmployeesListHandler)
+	app.Post("/employees", handlers.EmployeesListHandler)
 
 	// Company Endpoints
-	Router.POST("/companyregister", handlers.CompanyRegister_Handler)
-	Router.POST("/companylogin", handlers.CompanyLogin_Handler)
+	app.Post("/companyregister", handlers.CompanyRegister_Handler)
+	app.Post("/companylogin", handlers.CompanyLogin_Handler)
 
 	// Admin Endpoints
-	Router.POST("/adminregister", handlers.AdminRegister_Handler)
-	Router.POST("/adminlogin", handlers.AdminLogin_Handler)
+	app.Post("/adminregister", handlers.AdminRegister_Handler)
+	app.Post("/adminlogin", handlers.AdminLogin_Handler)
 
 	if configuration.Runmode == "dev" {
-		Router.Run(":8080")
+		app.Listen(":8080")
 	}
-	Router.Run()
+	app.Listen(":8080")
 }

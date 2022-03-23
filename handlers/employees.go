@@ -4,17 +4,16 @@ import (
 	"attendance-backend/controllers"
 	"net/http"
 
-	"github.com/gin-gonic/gin"
+	"github.com/gofiber/fiber/v2"
 	"github.com/spf13/cast"
 )
 
-func EmployeesListHandler(c *gin.Context) {
-	company_id_query := c.PostForm("company_id")
+func EmployeesListHandler(c *fiber.Ctx) error {
+	company_id_query := c.FormValue("company_id")
 	if company_id_query == "" {
-		c.String(http.StatusBadRequest, "company_id parameter is required")
-		return
+		return fiber.NewError(http.StatusBadRequest, "company_id parameter is required")
 	}
 	company_id := cast.ToUint(company_id_query)
 	employees := controllers.EmployeeList(company_id)
-	c.JSON(http.StatusOK, employees)
+	return c.JSON(employees)
 }

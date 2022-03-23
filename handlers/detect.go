@@ -3,51 +3,46 @@ package handlers
 import (
 	"attendance-backend/controllers"
 	"fmt"
-	"net/http"
 
-	"github.com/gin-gonic/gin"
+	"github.com/gofiber/fiber/v2"
 	"github.com/spf13/cast"
 )
 
-func EntryHandler(c *gin.Context) {
-	lat := c.PostForm("lat")
-	long := c.PostForm("lon")
+func EntryHandler(c *fiber.Ctx) error {
+	lat := c.FormValue("lat")
+	long := c.FormValue("lon")
 	image, err := c.FormFile("image")
-	company_id := c.PostForm("company_id")
+	company_id := c.FormValue("company_id")
 	if err != nil {
-		c.String(http.StatusBadRequest, err.Error())
 		fmt.Println(err.Error())
-		return
+		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
-	c.SaveUploadedFile(image, "/tmp/image.jpg")
+	c.SaveFile(image, "/tmp/image.jpg")
 	attendance, err := controllers.EntryDetect("/tmp/image.jpg", cast.ToFloat64(lat), cast.ToFloat64(long), cast.ToUint(company_id))
 	if err != nil {
-		c.String(http.StatusServiceUnavailable, err.Error())
-		return
+		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
-	c.JSON(http.StatusOK, gin.H{
+	return c.JSON(fiber.Map{
 		"status":  "entry marked",
 		"message": attendance,
 	})
 }
-func ExitHandler(c *gin.Context) {
-	lat := c.PostForm("lat")
-	long := c.PostForm("lon")
+func ExitHandler(c *fiber.Ctx) error {
+	lat := c.FormValue("lat")
+	long := c.FormValue("lon")
 	image, err := c.FormFile("image")
-	company_id := c.PostForm("company_id")
+	company_id := c.FormValue("company_id")
 	if err != nil {
-		c.String(http.StatusBadRequest, err.Error())
 		fmt.Println(err.Error())
-		return
+		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
-	c.SaveUploadedFile(image, "/tmp/image.jpg")
+	c.SaveFile(image, "/tmp/image.jpg")
 	attendance, err := controllers.ExitDetect("/tmp/image.jpg", cast.ToFloat64(lat), cast.ToFloat64(long), cast.ToUint(company_id))
 	fmt.Println("THE ATTENDANCE OBJECT IS", attendance)
 	if err != nil {
-		c.String(http.StatusServiceUnavailable, err.Error())
-		return
+		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
-	c.JSON(http.StatusOK, gin.H{
+	return c.JSON(fiber.Map{
 		"status":  "exit marked",
 		"message": attendance,
 	})
