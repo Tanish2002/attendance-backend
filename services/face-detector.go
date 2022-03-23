@@ -30,7 +30,6 @@ func RegisterFace(imagePath string, name string) error {
 }
 func DetectFace(imagePath string) (string, error) {
 	Rec.SetSamples()
-	fmt.Println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB")
 	face, err := Rec.ClassifyMultiples(imagePath)
 	fmt.Println("Face is: ", face)
 	if err != nil {
