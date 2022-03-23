@@ -11,8 +11,8 @@ import (
 )
 
 func RegisterFaceHandler(c *gin.Context) {
-	c.Header("Content-Type", "multipart/form-data")
-	fmt.Println(httputil.DumpRequest(c.Request, true))
+	req, _ := httputil.DumpRequest(c.Request, true)
+	fmt.Println(string(req))
 	name := c.PostForm("name")
 	gender := c.PostForm("gender")
 	company_id_query := c.PostForm("company_id")
