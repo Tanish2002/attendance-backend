@@ -3,8 +3,6 @@ module attendance-backend
 go 1.17
 
 require (
-	github.com/aws/aws-lambda-go v1.28.0
-	github.com/awslabs/aws-lambda-go-api-proxy v0.13.1
 	github.com/gin-contrib/cors v1.3.1
 	github.com/gin-gonic/gin v1.7.7
 	github.com/leandroveronezi/go-recognizer v1.0.0
@@ -18,6 +16,8 @@ require (
 
 require (
 	github.com/Kagami/go-face v0.0.0-20200513173138-d4af7c8eab1c // indirect
+	github.com/aws/aws-lambda-go v1.28.0 // indirect
+	github.com/awslabs/aws-lambda-go-api-proxy v0.13.1 // indirect
 	github.com/disintegration/imaging v1.6.2 // indirect
 	github.com/fogleman/gg v1.3.0 // indirect
 	github.com/fsnotify/fsnotify v1.5.1 // indirect

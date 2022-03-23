@@ -31,13 +31,14 @@ func registerDatabase() {
 		MYSQLCONFIG.HostName + ")/" +
 		MYSQLCONFIG.DatabaseName + "?parseTime=true"
 	log.Println("conf", mysqlConf)
+	dsn := "admin:admin123@tcp(tanish2002.ccrummygr9s6.ap-south-1.rds.amazonaws.com:3306)/attendance?charset=utf8mb4&parseTime=True&loc=Local"
 	var err error
-	models.DB, err = gorm.Open(mysql.Open(mysqlConf), &gorm.Config{
+	models.DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
 		// Silent ORM Logs
 		Logger: logger.Default.LogMode(logger.Silent),
 	})
 	if err != nil {
-		fmt.Println("Failed to connect to database")
+		fmt.Println("Failed to connect to database: ", err)
 	}
 	// Create Tables if they aren't already created
 	models.DB.AutoMigrate(&models.Attendance_Taken{}, &models.Admin_Details{}, &models.Employee_Details{}, &models.Company_Details{}, &models.Dataset{})
