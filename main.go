@@ -3,6 +3,7 @@ package main
 import (
 	"attendance-backend/configuration"
 	"attendance-backend/handlers"
+	"fmt"
 	"os"
 
 	"log"
@@ -45,5 +46,7 @@ func main() {
 		app.Listen(":8080")
 	}
 	PORT := os.Getenv("PORT")
-	app.Listen(PORT)
+	fmt.Println(PORT)
+	app.Listen(":" + PORT)
+	fmt.Println("Fiber Load Complete!")
 }
