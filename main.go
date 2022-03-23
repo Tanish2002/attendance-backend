@@ -10,27 +10,29 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+var Router *gin.Engine
+
 func init() {
 	configuration.Init()
 	log.Printf("Gin cold start")
-	handlers.Router = gin.Default()
-	handlers.Router.Use(cors.Default())
+	Router = gin.Default()
+	Router.Use(cors.Default())
 
 	// Attendance Endpoints
-	handlers.Router.POST("/entry", handlers.EntryHandler)
-	handlers.Router.POST("/exit", handlers.ExitHandler)
-	handlers.Router.POST("/registerface", handlers.RegisterFaceHandler)
+	Router.POST("/entry", handlers.EntryHandler)
+	Router.POST("/exit", handlers.ExitHandler)
+	Router.POST("/registerface", handlers.RegisterFaceHandler)
 
 	// Employee List
-	handlers.Router.POST("/employees", handlers.EmployeesListHandler)
+	Router.POST("/employees", handlers.EmployeesListHandler)
 
 	// Company Endpoints
-	handlers.Router.POST("/companyregister", handlers.CompanyRegister_Handler)
-	handlers.Router.POST("/companylogin", handlers.CompanyLogin_Handler)
+	Router.POST("/companyregister", handlers.CompanyRegister_Handler)
+	Router.POST("/companylogin", handlers.CompanyLogin_Handler)
 
 	// Admin Endpoints
-	handlers.Router.POST("/adminregister", handlers.AdminRegister_Handler)
-	handlers.Router.POST("/adminlogin", handlers.AdminLogin_Handler)
+	Router.POST("/adminregister", handlers.AdminRegister_Handler)
+	Router.POST("/adminlogin", handlers.AdminLogin_Handler)
 
 }
 
@@ -39,9 +41,9 @@ func main() {
 	// services.Rec.SaveDataset("dataset.json")
 
 	if configuration.Runmode == "dev" {
-		handlers.Router.Run(":8080")
+		Router.Run(":8080")
 	}
-	handlers.Router.Run()
+	Router.Run()
 	//lambda.Start(handlers.LambdaHandler)
 	//algnhsa.ListenAndServe(router, nil)
 }
