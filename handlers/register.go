@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"attendance-backend/controllers"
+	"fmt"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/spf13/cast"
@@ -16,7 +17,9 @@ func RegisterFaceHandler(c *fiber.Ctx) error {
 	company_id := cast.ToUint(company_id_query)
 
 	image, err := c.FormFile("image")
-
+	if err != nil {
+		return fiber.NewError(fiber.StatusBadRequest, err.Error())
+	}
 	// image := c.PostForm("image")
 	// coI := strings.Index(string(image), ",")
 	// rawImage := string(image)[coI+1:]
@@ -29,9 +32,8 @@ func RegisterFaceHandler(c *fiber.Ctx) error {
 	//err = services.Rec.SaveImage("/tmp/image.jpg", jpgI)
 
 	c.SaveFile(image, "/tmp/image.jpg")
-	if err != nil {
-		return fiber.NewError(fiber.StatusBadRequest, err.Error())
-	}
+
+	fmt.Println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaa")
 	if err := controllers.RegisterFace(name, gender, company_id, "/tmp/image.jpg"); err != nil {
 		return fiber.NewError(fiber.StatusServiceUnavailable, err.Error())
 	}
