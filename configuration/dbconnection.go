@@ -8,7 +8,6 @@ import (
 	"github.com/spf13/viper"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"gorm.io/gorm/schema"
 )
 
 type MysqlConfig struct {
@@ -33,9 +32,6 @@ func registerDatabase() {
 	log.Println("conf", mysqlConf)
 	var err error
 	models.DB, err = gorm.Open(mysql.Open(mysqlConf), &gorm.Config{
-		NamingStrategy: schema.NamingStrategy{
-			SingularTable: true,
-		},
 		// Silent ORM Logs
 		//Logger: logger.Default.LogMode(logger.Silent),
 	})
@@ -44,8 +40,4 @@ func registerDatabase() {
 	}
 	// Create Tables if they aren't already created
 	models.DB.AutoMigrate(&models.Attendance_Taken{}, &models.Admin_Details{}, &models.Employee_Details{}, &models.Company_Details{}, &models.Dataset{})
-	// err := orm.RunSyncdb("default", false, true)
-	// if err != nil {
-	// 	fmt.Println(err)
-	// }
 }
