@@ -6,6 +6,7 @@ import (
 )
 
 func RegisterFace(name string, gender string, company_id uint, imagePath string) error {
+	fmt.Println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaa")
 	faceId, err := services.DetectFace(imagePath)
 	fmt.Println(faceId, err)
 	if faceId != "" {
