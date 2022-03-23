@@ -18,4 +18,5 @@ func face_detection() {
 	services.Rec.UseGray = true
 	services.Rec.UseCNN = true
 	services.LoadDataset(&services.Rec)
+	fmt.Println(services.Rec)
 }

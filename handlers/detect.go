@@ -29,10 +29,6 @@ func EntryHandler(c *gin.Context) {
 		"status":  "entry marked",
 		"message": attendance,
 	})
-	// if err := controllers.EntryDetect("/tmp/image.jpg"); err != nil {
-	// 	c.String(http.StatusServiceUnavailable, err.Error())
-	// 	return
-	// }
 }
 func ExitHandler(c *gin.Context) {
 	lat := c.PostForm("lat")
@@ -55,8 +51,4 @@ func ExitHandler(c *gin.Context) {
 		"status":  "exit marked",
 		"message": attendance,
 	})
-	// if err := controllers.EntryDetect("/tmp/image.jpg"); err != nil {
-	// 	c.String(http.StatusServiceUnavailable, err.Error())
-	// 	return
-	// }
 }
