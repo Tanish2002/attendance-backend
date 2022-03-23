@@ -10,6 +10,7 @@ require (
 	github.com/leandroveronezi/go-recognizer v1.0.0
 	github.com/spf13/cast v1.4.1
 	github.com/spf13/viper v1.10.1
+	golang.org/x/crypto v0.0.0-20220321153916-2c7772ba3064
 	gorm.io/datatypes v1.0.6
 	gorm.io/driver/mysql v1.3.2
 	gorm.io/gorm v1.23.3
@@ -43,7 +44,6 @@ require (
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/subosito/gotenv v1.2.0 // indirect
 	github.com/ugorji/go/codec v1.1.7 // indirect
-	golang.org/x/crypto v0.0.0-20220214200702-86341886e292 // indirect
 	golang.org/x/image v0.0.0-20200119044424-58c23975cae1 // indirect
 	golang.org/x/sys v0.0.0-20220227234510-4e6760a101f9 // indirect
 	golang.org/x/text v0.3.7 // indirect

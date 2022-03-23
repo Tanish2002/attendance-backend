@@ -123,8 +123,10 @@ github.com/subosito/gotenv
 # github.com/ugorji/go/codec v1.1.7
 ## explicit
 github.com/ugorji/go/codec
-# golang.org/x/crypto v0.0.0-20220214200702-86341886e292
+# golang.org/x/crypto v0.0.0-20220321153916-2c7772ba3064
 ## explicit; go 1.17
+golang.org/x/crypto/bcrypt
+golang.org/x/crypto/blowfish
 golang.org/x/crypto/sha3
 # golang.org/x/image v0.0.0-20200119044424-58c23975cae1
 ## explicit; go 1.12
