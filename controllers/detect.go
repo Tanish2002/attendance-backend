@@ -8,7 +8,6 @@ import (
 )
 
 func EntryDetect(imagePath string, lat float64, long float64, company_id uint) (*models.Attendance_Taken, error) {
-	fmt.Println(company_id)
 	company := models.GetCompanyDetailByID(company_id)
 	measure := models.Measure(lat, long, company.Lat, company.Long)
 	fmt.Println(lat, long, company.Lat, company.Long)
