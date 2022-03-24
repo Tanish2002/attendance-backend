@@ -1,8 +1,8 @@
 ---
-title: Gin
-description: A Gin server
+title: Fiber
+description: A Fiber server
 tags:
-  - gin
+  - fiber
   - golang
 ---
 
