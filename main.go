@@ -5,6 +5,7 @@ import (
 	"attendance-backend/handlers"
 	"fmt"
 	"os"
+	"strings"
 
 	"log"
 
@@ -22,7 +23,22 @@ func init() {
 func main() {
 	log.Printf("Fiber start")
 	app := fiber.New()
-	app.Use(cors.New())
+	app.Use(cors.New(cors.Config{
+		Next:         nil,
+		AllowOrigins: "*",
+		AllowMethods: strings.Join([]string{
+			fiber.MethodGet,
+			fiber.MethodPost,
+			fiber.MethodHead,
+			fiber.MethodPut,
+			fiber.MethodDelete,
+			fiber.MethodPatch,
+		}, ","),
+		AllowHeaders:     "*",
+		AllowCredentials: false,
+		ExposeHeaders:    "*",
+		MaxAge:           0,
+	}))
 	app.Use(logger.New())
 	// Router.Use(cors.Default())
 

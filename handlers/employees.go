@@ -2,18 +2,21 @@ package handlers
 
 import (
 	"attendance-backend/controllers"
-	"net/http"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/spf13/cast"
 )
 
+type Employee_Body struct {
+	Company_ID uint `json:"company_id"`
+}
+
 func EmployeesListHandler(c *fiber.Ctx) error {
-	company_id_query := c.FormValue("company_id")
-	if company_id_query == "" {
-		return fiber.NewError(http.StatusBadRequest, "company_id parameter is required")
+	body := new(Register_Body)
+	err := c.BodyParser(body)
+	if err != nil {
+		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
-	company_id := cast.ToUint(company_id_query)
+	company_id := body.Company_ID
 	employees := controllers.EmployeeList(company_id)
 	return c.JSON(employees)
 }

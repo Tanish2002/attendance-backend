@@ -2,17 +2,27 @@ package handlers
 
 import (
 	"attendance-backend/controllers"
+	"fmt"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/spf13/cast"
 )
 
+type Admin_Body struct {
+	UserName  string `json:"username"`
+	Password  string `json:"pass"`
+	CompanyID uint   `json:"company_id"`
+}
+
 func AdminRegister_Handler(c *fiber.Ctx) error {
-	// name string, lat float32, long float32, entry_time time.Time, exit_time time.Time
-	username := c.FormValue("username")
-	pass := c.FormValue("pass")
-	company_id := c.FormValue("company_id")
-	admin, err := controllers.RegisterAdmin(username, pass, cast.ToUint(company_id))
+	body := new(Admin_Body)
+	err := c.BodyParser(body)
+	if err != nil {
+		return fiber.NewError(fiber.StatusBadRequest, err.Error())
+	}
+	username := body.UserName
+	pass := body.Password
+	company_id := body.CompanyID
+	admin, err := controllers.RegisterAdmin(username, pass, company_id)
 	if err != nil {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
@@ -20,10 +30,13 @@ func AdminRegister_Handler(c *fiber.Ctx) error {
 }
 
 func AdminLogin_Handler(c *fiber.Ctx) error {
-	username := c.FormValue("username")
-	pass := c.FormValue("pass")
-	company_id := c.FormValue("company_id")
-	admin, err := controllers.LoginAdmin(username, pass, cast.ToUint(company_id))
+	body := new(Admin_Body)
+	c.BodyParser(body)
+	username := body.UserName
+	pass := body.Password
+	company_id := body.CompanyID
+	fmt.Println(username, pass, company_id)
+	admin, err := controllers.LoginAdmin(username, pass, company_id)
 	if err != nil {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}

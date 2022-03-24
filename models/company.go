@@ -21,9 +21,11 @@ func AddCompanyDetails(company_details *Company_Details) (*Company_Details, erro
 	return company_details, nil
 }
 
-func GetCompanyDetailByID(id uint) Company_Details {
-	var company Company_Details
-	DB.Take(&company, id)
+func GetCompanyDetailByID(id uint) *Company_Details {
+	company := new(Company_Details)
+	DB.Where(&Company_Details{
+		ID: id,
+	}).Take(company)
 	return company
 }
 

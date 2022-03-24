@@ -8,7 +8,6 @@ import (
 	"github.com/spf13/viper"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
 )
 
@@ -39,11 +38,12 @@ func registerDatabase() {
 			SingularTable: true,
 		},
 		// Silent ORM Logs
-		Logger: logger.Default.LogMode(logger.Silent),
+		//Logger: logger.Default.LogMode(logger.Silent),
 	})
 	if err != nil {
 		fmt.Println("Failed to connect to database: ", err)
 	}
 	// Create Tables if they aren't already created
 	models.DB.AutoMigrate(&models.Attendance_Taken{}, &models.Admin_Details{}, &models.Employee_Details{}, &models.Company_Details{}, &models.Dataset{})
+	fmt.Println("REEEEEEEe")
 }
